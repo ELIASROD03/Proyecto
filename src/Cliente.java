@@ -1,8 +1,8 @@
 
 public class Cliente {
-    String nombre;
-    String numeroTel;
-    String preferencia;
+    private String nombre;
+    private String numeroTel;
+    private String preferencia;
 
     public Cliente(String nombre, String numeroTel, String preferencia) {
         this.nombre = nombre;
