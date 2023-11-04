@@ -1,8 +1,5 @@
 package Clases;
 
-
-
-
 public class Stock {
     private String nombreIngrediente;
     private int cantidadIngrediente;
