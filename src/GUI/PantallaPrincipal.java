@@ -10,9 +10,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public PantallaPrincipal(ControladorPrincipal controlador) {
         initComponents();
         setTitle("Cocina Economica");
-        jpn_1.setVisible(false);
-        jpn_2.setVisible(false);
-        jpn_3.setVisible(false);
+        //jpn_1.setVisible(false);
+        //jpn_2.setVisible(false);
+        //jpn_3.setVisible(false);
         controlador.obtenerControladorClientes().agregarCliente();//ejemplo de llamar a los metodos del controlador de clientes
     }
     
@@ -36,18 +36,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jpn_1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jpn_2 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jpn_3 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel5.setBackground(new java.awt.Color(255, 204, 102));
@@ -205,115 +197,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 465));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel7.setText("aqui se pondra la interfaz para realizar los pedidos");
-
-        javax.swing.GroupLayout jpn_1Layout = new javax.swing.GroupLayout(jpn_1);
-        jpn_1.setLayout(jpn_1Layout);
-        jpn_1Layout.setHorizontalGroup(
-            jpn_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpn_1Layout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addComponent(jLabel7)
-                .addContainerGap(145, Short.MAX_VALUE))
-        );
-        jpn_1Layout.setVerticalGroup(
-            jpn_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpn_1Layout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addComponent(jLabel7)
-                .addContainerGap(341, Short.MAX_VALUE))
-        );
-
-        jLabel8.setText("aqui se pondra la interfaz para ver las ventas");
-
-        javax.swing.GroupLayout jpn_2Layout = new javax.swing.GroupLayout(jpn_2);
-        jpn_2.setLayout(jpn_2Layout);
-        jpn_2Layout.setHorizontalGroup(
-            jpn_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpn_2Layout.createSequentialGroup()
-                .addGap(212, 212, 212)
-                .addComponent(jLabel8)
-                .addContainerGap(85, Short.MAX_VALUE))
-        );
-        jpn_2Layout.setVerticalGroup(
-            jpn_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpn_2Layout.createSequentialGroup()
-                .addGap(190, 190, 190)
-                .addComponent(jLabel8)
-                .addContainerGap(252, Short.MAX_VALUE))
-        );
-
-        jButton4.setText("jButton4");
-
-        jButton5.setText("jButton5");
-
-        jButton6.setText("jButton6");
-
-        javax.swing.GroupLayout jpn_3Layout = new javax.swing.GroupLayout(jpn_3);
-        jpn_3.setLayout(jpn_3Layout);
-        jpn_3Layout.setHorizontalGroup(
-            jpn_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpn_3Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(jButton4)
-                .addGap(87, 87, 87)
-                .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
-                .addComponent(jButton6)
-                .addGap(56, 56, 56))
-        );
-        jpn_3Layout.setVerticalGroup(
-            jpn_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpn_3Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jpn_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
-                .addContainerGap(409, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jpn_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jpn_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jpn_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jpn_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jpn_2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jpn_3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-
-        jPanel4.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, 540, 470));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -322,7 +205,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
         );
 
         pack();
@@ -334,9 +217,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
            this.jButton2.setSelected(false);
            this.jButton3.setSelected(false);
            
-           jpn_1.setVisible(true);
-           jpn_2.setVisible(false);
-           jpn_3.setVisible(false);
+          // jpn_1.setVisible(true);
+           //jpn_2.setVisible(false);
+           //jpn_3.setVisible(false);
        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -346,9 +229,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
            this.jButton2.setSelected(true);
            this.jButton3.setSelected(false);
            
-           jpn_2.setVisible(true);
-           jpn_1.setVisible(false);
-           jpn_3.setVisible(false);
+           //jpn_2.setVisible(true);
+           //jpn_1.setVisible(false);
+           //jpn_3.setVisible(false);
        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -358,9 +241,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
            this.jButton2.setSelected(false);
            this.jButton3.setSelected(true);
            
-           jpn_3.setVisible(true);
-            jpn_1.setVisible(false);
-            jpn_2.setVisible(false);
+           //jpn_3.setVisible(true);
+            //jpn_1.setVisible(false);
+            //jpn_2.setVisible(false);
        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -373,25 +256,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jpn_1;
-    private javax.swing.JPanel jpn_2;
-    private javax.swing.JPanel jpn_3;
     // End of variables declaration//GEN-END:variables
 }
