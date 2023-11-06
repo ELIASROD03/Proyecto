@@ -238,15 +238,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(!this.jButton2.isSelected()){
-           this.jButton1.setSelected(false);
-           this.jButton2.setSelected(true);
-           this.jButton3.setSelected(false);
+       Cliente venCliente = new Cliente(this, true);
+       venCliente.setVisible(true);
+
+        //if(!this.jButton2.isSelected()){
+           //this.jButton1.setSelected(false);
+           //this.jButton2.setSelected(true);
+           //this.jButton3.setSelected(false);
            
            //jpn_2.setVisible(true);
            //jpn_1.setVisible(false);
            //jpn_3.setVisible(false);
-       }
+       //}
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
