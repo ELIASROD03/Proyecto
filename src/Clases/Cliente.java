@@ -1,6 +1,7 @@
 package Clases;
 
 
+
 /**
  * La clase Cliente representa a un cliente que tiene un nombre, un número de teléfono y una preferencia.
  */
@@ -75,4 +76,5 @@ public class Cliente {
     public void setPreferencia(String preferencia) {
         this.preferencia = preferencia;
     }
+
 }

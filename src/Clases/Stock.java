@@ -1,5 +1,6 @@
 package Clases;
 
+
 /**
  * La clase Stock representa un elemento de inventario que contiene información sobre un ingrediente y su cantidad en stock.
  */

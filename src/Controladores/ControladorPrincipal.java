@@ -2,6 +2,7 @@
 package Controladores;
 
 
+
 /**
  * La clase ControladorPrincipal es responsable de gestionar los controladores de clientes, platillos y stock en una aplicación.
  */

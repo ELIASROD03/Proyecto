@@ -1,6 +1,7 @@
 package Clases;
 
 
+
 /**
  * La clase Platillos representa un objeto que describe un platillo en un menú de restaurante.
  * Cada platillo tiene un nombre, una descripción y un precio asociado.
@@ -77,4 +78,7 @@ public class Platillos {
         this.precio = precio;
     }
 }
+
+
+
 

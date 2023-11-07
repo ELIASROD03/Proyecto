@@ -4,6 +4,7 @@ package Controladores;
 import Clases.Stock;
 import java.util.ArrayList;
 
+
 /**
  * La clase ControladorStock se encarga de gestionar la lista de elementos de inventario (stock).
  */
