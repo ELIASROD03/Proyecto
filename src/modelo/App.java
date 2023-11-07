@@ -1,4 +1,4 @@
-package Clases;
+package modelo;
 
 import Controladores.ControladorPrincipal;
 import GUI.ControladorVentanas;

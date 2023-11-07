@@ -1,7 +1,7 @@
 
 package Controladores;
 
-import Clases.Cliente;
+import modelo.Cliente;
 import java.util.ArrayList;
 
 

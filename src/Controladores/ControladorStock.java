@@ -1,7 +1,7 @@
 
 package Controladores;
 
-import Clases.Stock;
+import modelo.Stock;
 import java.util.ArrayList;
 
 

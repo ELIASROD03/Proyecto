@@ -1,7 +1,7 @@
 
 package Controladores;
 
-import Clases.Platillos;
+import modelo.Platillos;
 import java.util.ArrayList;
 
 
