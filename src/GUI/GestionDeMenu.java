@@ -232,11 +232,9 @@ public class GestionDeMenu extends javax.swing.JPanel {
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
         
     }//GEN-LAST:event_jComboBox2ItemStateChanged
-private void filtrar(){
-    
-}
+
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-       filtrar();
+     
     }//GEN-LAST:event_jTextField5ActionPerformed
 
 
