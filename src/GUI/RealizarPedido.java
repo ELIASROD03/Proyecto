@@ -4,9 +4,11 @@
  */
 package GUI;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -21,7 +23,7 @@ public class RealizarPedido extends javax.swing.JPanel {
     public RealizarPedido() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,7 +65,20 @@ public class RealizarPedido extends javax.swing.JPanel {
             new String [] {
                 "Número de Pedido", "Nombre del Cliente", "Total del Pedido", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Agregar Pedido");
@@ -169,6 +184,34 @@ public class RealizarPedido extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int index = jTable1.getSelectedRow();
+    
+    if (index != -1) { // Asegurarse de que se haya seleccionado una fila
+        TableModel model = jTable1.getModel();
+        
+        // Obtener y verificar el valor de la celda en la columna 0
+        Object rawValueNumeroDePedido = model.getValueAt(index, 0);
+        String NumeroDePedido = (rawValueNumeroDePedido != null) ? rawValueNumeroDePedido.toString() : "";
+
+        // Obtener y verificar el valor de la celda en la columna 2
+        Object rawValueNombreDelCliente = model.getValueAt(index, 2);
+        String NombreDelCliente = (rawValueNombreDelCliente != null) ? rawValueNombreDelCliente.toString() : "";
+
+        // Crear e instanciar la ventana jtRowData
+        TablaRealizarPedido jtRowData = new TablaRealizarPedido();
+        
+        // Configurar y mostrar la ventana
+        jtRowData.setVisible(true);
+        jtRowData.pack();
+        jtRowData.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Configurar los valores en jtRowData
+        jtRowData.NumeroDePedido.setText(NumeroDePedido);
+        jtRowData.NombreDelCliente.setText(NombreDelCliente);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
