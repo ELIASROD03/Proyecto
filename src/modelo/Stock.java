@@ -1,12 +1,22 @@
 package modelo;
 
+import java.io.Serializable;
+
 
 /**
  * La clase Stock representa un elemento de inventario que contiene información sobre un ingrediente y su cantidad en stock.
  */
-public class Stock {
+public class Stock implements Serializable {
     private String nombreIngrediente; // Nombre del ingrediente
-    private int cantidadIngrediente;  // Cantidad del ingrediente en stock
+    private String  cantidadIngrediente;  // Cantidad del ingrediente en stock
+
+    public Stock(String nombreIngrediente, String cantidadIngrediente) {
+        this.nombreIngrediente = nombreIngrediente;
+        this.cantidadIngrediente = cantidadIngrediente;
+    }
+    
+    
+    
 
     /**
      * Obtiene el nombre del ingrediente.
@@ -31,7 +41,7 @@ public class Stock {
      *
      * @return La cantidad del ingrediente en stock.
      */
-    public int getCantidadIngrediente() {
+    public String getCantidadIngrediente() {
         return cantidadIngrediente;
     }
 
@@ -40,7 +50,7 @@ public class Stock {
      *
      * @param cantidadIngrediente La cantidad del ingrediente en stock a establecer.
      */
-    public void setCantidadIngrediente(int cantidadIngrediente) {
+    public void setCantidadIngrediente(String cantidadIngrediente) {
         this.cantidadIngrediente = cantidadIngrediente;
     }
 

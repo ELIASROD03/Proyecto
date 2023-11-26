@@ -4,23 +4,44 @@
  */
 package GUI;
 
+import Controladores.ControladorPrincipal;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
+import modelo.PersistenciaGeneral;
+
+import modelo.Platillos;
 
 /**
  *
  * @author blanc
  */
 public class GestionDeMenu extends javax.swing.JPanel {
-
+    private ControladorPrincipal controlador;
+    private ArrayList<Platillos> listaPlatillos;
+   
     /**
      * Creates new form GestionDeMenu
      */
-    public GestionDeMenu() {
+    public GestionDeMenu(ControladorPrincipal controlador) {
         initComponents();
+      this.controlador = controlador; 
+      this.listaPlatillos = PersistenciaGeneral.cargarListaPlatillos("listaPlatillos.dat");
+
+        // Mostrar la lista en la tabla
+        actualizarTablaPlatillos();
+        
     }
+    
+     private void actualizarTablaPlatillos() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTablePlatillos.getModel();
+        modeloTabla.setRowCount(0); // Limpiar la tabla antes de agregar nuevas filas
+
+        for (Platillos platillo : listaPlatillos) {
+            modeloTabla.addRow(new Object[]{platillo.getNombrePlatillo(), platillo.getPrecio(), platillo.getDescripcion(), platillo.getMomentodia(),});
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,18 +54,18 @@ public class GestionDeMenu extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nombreplt_txt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        precioPlt_txt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        DescripPlt_txt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        agregaP_btn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTablePlatillos = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -66,14 +87,14 @@ public class GestionDeMenu extends javax.swing.JPanel {
 
         jLabel6.setText("Ingredientes del Platillo");
 
-        jButton1.setText("Agregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        agregaP_btn.setText("Agregar");
+        agregaP_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                agregaP_btnActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePlatillos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -81,7 +102,7 @@ public class GestionDeMenu extends javax.swing.JPanel {
                 "Nombre", "Precio", "Descripción", "Momento", "Ingredientes"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTablePlatillos);
 
         jButton2.setText("Eliminar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -131,14 +152,14 @@ public class GestionDeMenu extends javax.swing.JPanel {
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jTextField2)
-                                    .addComponent(jTextField3)
+                                    .addComponent(nombreplt_txt)
+                                    .addComponent(precioPlt_txt)
+                                    .addComponent(DescripPlt_txt)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextField4)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(11, 11, 11)
-                                .addComponent(jButton1)
+                                .addComponent(agregaP_btn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
@@ -162,15 +183,15 @@ public class GestionDeMenu extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nombreplt_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(precioPlt_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DescripPlt_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -181,7 +202,7 @@ public class GestionDeMenu extends javax.swing.JPanel {
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
+                            .addComponent(agregaP_btn)
                             .addComponent(jButton2)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -192,33 +213,52 @@ public class GestionDeMenu extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(jTextField1.getText().equals("")||jTextField2.getText().equals("")||jTextField3.getText().equals("")||jComboBox1.getSelectedItem().equals("")||jTextField4.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Please Enter all data");
-        }else{
-            String data[] = {jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), (String)jComboBox1.getSelectedItem(), jTextField4.getText()};
-            DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
+    private void agregaP_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregaP_btnActionPerformed
+      
+        try {
+        if (nombreplt_txt.getText().equals("") || precioPlt_txt.getText().equals("") || DescripPlt_txt.getText().equals("") || jComboBox1.getSelectedItem().equals("") || jTextField4.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Please Enter all data");
+        } else {
+            // Crear un objeto Platillos con los datos ingresados
+            Platillos platillo = new Platillos
+            (nombreplt_txt.getText(), 
+               DescripPlt_txt.getText(), 
+                   precioPlt_txt.getText(), 
+                    (String) jComboBox1.getSelectedItem());
+
+            // Agregar el objeto Platillos a la lista
+            listaPlatillos.add(platillo);
             
-            tblModel.addRow(data);
-            
-            JOptionPane.showMessageDialog(this,"Add data succesfully");
-            
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jTextField3.setText("");
+           
+
+            // Mostrar un mensaje de éxito
+            JOptionPane.showMessageDialog(this, "Add data successfully");
+
+            // Limpiar los campos de entrada
+            nombreplt_txt.setText("");
+            precioPlt_txt.setText("");
+            DescripPlt_txt.setText("");
             jComboBox1.setSelectedItem("");
             jTextField4.setText("");
             
+            PersistenciaGeneral.guardarListaPlatillos(listaPlatillos, "listaPlatillos.dat");
+            DefaultTableModel tblModel = (DefaultTableModel) jTablePlatillos.getModel();
+            tblModel.addRow(new Object[]{platillo.getNombrePlatillo(), platillo.getPrecio(), platillo.getDescripcion(), platillo.getMomentodia(), jTextField4.getText()});
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    } catch (Exception ex) {
+        // Manejar la excepción (puedes mostrar un mensaje de error, hacer un registro, etc.)
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
+    }
+    }//GEN-LAST:event_agregaP_btnActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
+        DefaultTableModel tblModel = (DefaultTableModel)jTablePlatillos.getModel();
         
-        if(jTable1.getSelectedRowCount() == 1){
-            tblModel.removeRow(jTable1.getSelectedRow());
+        if(jTablePlatillos.getSelectedRowCount() == 1){
+            tblModel.removeRow(jTablePlatillos.getSelectedRow());
         }else{
-            if(jTable1.getRowCount()==0){
+            if(jTablePlatillos.getRowCount()==0){
                 JOptionPane.showMessageDialog(this, "Table is Empty.");
             }else{
                 JOptionPane.showMessageDialog(this, "PLEASE SELESCT sINGLE rOW FOR DELETE.");
@@ -240,7 +280,8 @@ public class GestionDeMenu extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField DescripPlt_txt;
+    private javax.swing.JButton agregaP_btn;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -252,11 +293,12 @@ public class GestionDeMenu extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable jTablePlatillos;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField nombreplt_txt;
+    private javax.swing.JTextField precioPlt_txt;
     // End of variables declaration//GEN-END:variables
+
+   
 }

@@ -1,11 +1,13 @@
 package modelo;
 
+import java.io.Serializable;
+
 
 
 /**
  * La clase Cliente representa a un cliente que tiene un nombre, un número de teléfono y una preferencia.
  */
-public class Cliente {
+public class Cliente implements Serializable {
     private String nombre;
     private String numeroTel;
     private String preferencia;

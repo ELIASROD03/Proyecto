@@ -4,18 +4,40 @@
  */
 package GUI;
 
+import Controladores.ControladorPrincipal;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import modelo.PersistenciaGeneral;
+import modelo.Stock;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author blanc
  */
 public class GestionIngredientes extends javax.swing.JPanel {
-
+    private ControladorPrincipal controlador;
+    private ArrayList<Stock> listaStock;
     /**
      * Creates new form GestionIngredientes
      */
-    public GestionIngredientes() {
+    public GestionIngredientes(ControladorPrincipal controlador) {
         initComponents();
+        this.controlador = controlador;
+        this.listaStock = PersistenciaGeneral.cargarListaStock("listaStock.dat");
+        
+        actualizarTablaStock();
+        
     }
+    
+    private void actualizarTablaStock() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) tablaStock.getModel();
+        modeloTabla.setRowCount(0); // Limpiar la tabla antes de agregar nuevas filas
+
+        for (Stock stock : listaStock) {
+            modeloTabla.addRow(new Object[]{stock.getNombreIngrediente(),stock.getCantidadIngrediente()});
+        }
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,19 +50,19 @@ public class GestionIngredientes extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaStock = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nombreI_txt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        cantidadI_txt = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(192, 232, 192));
 
         jLabel1.setText("Gestión Ingredientes y Stock");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaStock.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -48,15 +70,31 @@ public class GestionIngredientes extends javax.swing.JPanel {
                 "Ingredientes", "Cantidad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaStock);
 
         jLabel2.setText("Nombre del Ingrediente");
 
         jLabel3.setText("Cantidad");
 
         jButton1.setText("Agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Eliminar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        cantidadI_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cantidadI_txtActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -65,8 +103,7 @@ public class GestionIngredientes extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1)
-                    .addComponent(jSpinner1)
+                    .addComponent(nombreI_txt)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -75,7 +112,8 @@ public class GestionIngredientes extends javax.swing.JPanel {
                                 .addComponent(jButton1)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(cantidadI_txt))
                 .addGap(57, 57, 57)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
@@ -97,12 +135,12 @@ public class GestionIngredientes extends javax.swing.JPanel {
                         .addGap(124, 124, 124)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nombreI_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cantidadI_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(jButton2))))
@@ -110,16 +148,49 @@ public class GestionIngredientes extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       try {
+            if(nombreI_txt.getText().equals("")|| cantidadI_txt.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "Please Enter all data");
+            }else{
+               Stock stock = new Stock(nombreI_txt.getText(),cantidadI_txt.getText());
+               listaStock.add(stock);
+                // Mostrar un mensaje de éxito
+               JOptionPane.showMessageDialog(this, "Add data successfully");
+               
+               // Limpiar los campos de entrada
+               nombreI_txt.setText("");
+               cantidadI_txt.setText("");
+              
+               
+               PersistenciaGeneral.guardarListaStock(listaStock, "listaStock.dat");
+               DefaultTableModel tblModel = (DefaultTableModel) tablaStock.getModel();
+                tblModel.addRow(new Object[]{stock.getNombreIngrediente(),stock.getCantidadIngrediente()});
+               }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cantidadI_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadI_txtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cantidadI_txtActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cantidadI_txt;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField nombreI_txt;
+    private javax.swing.JTable tablaStock;
     // End of variables declaration//GEN-END:variables
 }

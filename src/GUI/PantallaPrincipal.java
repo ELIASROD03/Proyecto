@@ -3,23 +3,28 @@ package GUI;
 
 import Controladores.ControladorPrincipal;
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JPanel;
+
+
 
 
 public class PantallaPrincipal extends javax.swing.JFrame {
        private ControladorPrincipal controlador;
+
   
     public PantallaPrincipal(ControladorPrincipal controlador) {
         initComponents();
+        this.controlador = controlador;
         setTitle("Cocina Economica");
-        //jpn_1.setVisible(false);
-        //jpn_2.setVisible(false);
-        //jpn_3.setVisible(false);
         
         
-        
-        controlador.obtenerControladorClientes().agregarCliente();//ejemplo de llamar a los metodos del controlador de clientes
     }
+    
+   
     
 
    
@@ -361,19 +366,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       //Cliente venCliente = new Cliente(this, true);
-       //venCliente.setVisible(true);
 
-        //if(!this.jButton2.isSelected()){
-           //this.jButton1.setSelected(false);
-           //this.jButton2.setSelected(true);
-           //this.jButton3.setSelected(false);
-           
-           //jpn_2.setVisible(true);
-           //jpn_1.setVisible(false);
-           //jpn_3.setVisible(false);
-       //}
-       GestionIngredientes gestioningredientes = new GestionIngredientes();
+       GestionIngredientes gestioningredientes = new GestionIngredientes(controlador);
        ShowPanel(gestioningredientes);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -393,12 +387,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        GestionDeMenu gestiondemenu = new GestionDeMenu();
+        GestionDeMenu gestiondemenu = new GestionDeMenu(controlador);
         ShowPanel(gestiondemenu);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-       GestionClientes gestionclientes = new GestionClientes();
+       GestionClientes gestionclientes = new GestionClientes(controlador);
         ShowPanel(gestionclientes);
     }//GEN-LAST:event_jButton5ActionPerformed
 
