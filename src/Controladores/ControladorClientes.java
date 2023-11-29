@@ -30,5 +30,15 @@ public class ControladorClientes {
     public void agregarCliente() {
         // Implementa la lógica para agregar un nuevo cliente a la lista de clientes.
     }
+    
+    
+     public void eliminarCliente(ArrayList<Cliente> listaClientes, String nombreCliente) {
+        for (int i = 0; i < listaClientes.size(); i++) {
+            if (listaClientes.get(i).getNombre().equals(nombreCliente)) {
+                listaClientes.remove(i);
+                break;
+            }
+        }
+    }
 }
 

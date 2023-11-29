@@ -239,7 +239,24 @@ public class GestionClientes extends javax.swing.JPanel {
     }//GEN-LAST:event_agregarclt_btnActionPerformed
 
     private void borrarclt_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarclt_btnActionPerformed
-      
+      DefaultTableModel tblModel = (DefaultTableModel)jTableClientes.getModel();
+        
+        if(jTableClientes.getSelectedRowCount() == 1){
+             String nombreCliente = tblModel.getValueAt(jTableClientes.getSelectedRow(), 0).toString();
+            tblModel.removeRow(jTableClientes.getSelectedRow());
+            controlador.obtenerControladorClientes().eliminarCliente(listaClientes, nombreCliente);
+ 
+            PersistenciaGeneral.guardarListaClientes(listaClientes, "listaClientes.dat");
+            
+            
+            
+        }else{
+            if(jTableClientes.getRowCount()==0){
+                JOptionPane.showMessageDialog(this, "Table is Empty.");
+            }else{
+                JOptionPane.showMessageDialog(this, "PLEASE SELESCT sINGLE rOW FOR DELETE.");
+            }
+        }
     }//GEN-LAST:event_borrarclt_btnActionPerformed
 
 

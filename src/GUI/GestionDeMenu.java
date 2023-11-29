@@ -304,7 +304,15 @@ public class GestionDeMenu extends javax.swing.JPanel {
         DefaultTableModel tblModel = (DefaultTableModel)jTablePlatillos.getModel();
         
         if(jTablePlatillos.getSelectedRowCount() == 1){
+             String nombrePlatillo = tblModel.getValueAt(jTablePlatillos.getSelectedRow(), 0).toString();
             tblModel.removeRow(jTablePlatillos.getSelectedRow());
+            controlador.obtenerControladorPlatillos().eliminarPlatillo(listaPlatillos, nombrePlatillo);
+            
+            
+            PersistenciaGeneral.guardarListaPlatillos(listaPlatillos, "listaPlatillos.dat");
+            
+            
+            
         }else{
             if(jTablePlatillos.getRowCount()==0){
                 JOptionPane.showMessageDialog(this, "Table is Empty.");

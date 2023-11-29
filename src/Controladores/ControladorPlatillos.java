@@ -20,6 +20,16 @@ public class ControladorPlatillos {
     public ArrayList<Platillos> getListaPlatillos() {
         return listaPlatillos;
     }
+    
+     public void eliminarPlatillo(ArrayList<Platillos> listaPlatillos, String nombrePlatillo) {
+        for (int i = 0; i < listaPlatillos.size(); i++) {
+            if (listaPlatillos.get(i).getNombrePlatillo().equals(nombrePlatillo)) {
+                listaPlatillos.remove(i);
+                break;
+            }
+        }
+    }
+    
 }
 
     
