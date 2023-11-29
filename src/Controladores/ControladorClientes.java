@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import modelo.PersistenciaGeneral;
 
 /**
  * La clase ControladorClientes se encarga de gestionar la lista de clientes.
@@ -38,6 +42,36 @@ public class ControladorClientes {
                 listaClientes.remove(i);
                 break;
             }
+        }
+    }
+     
+    public void editarCliente(DefaultTableModel tblModel, JTable jTableClientes, ArrayList<Cliente> listaClientes) {
+        try {
+            if (jTableClientes.getSelectedRowCount() == 1) {
+                int selectedRow = jTableClientes.getSelectedRow();
+                String nuevoNombre = tblModel.getValueAt(selectedRow, 0).toString();
+                String nuevoNumero = tblModel.getValueAt(selectedRow, 1).toString();
+                String nuevaPreferencia = tblModel.getValueAt(selectedRow, 2).toString();
+
+                Cliente cliente = listaClientes.get(selectedRow);
+                cliente.setNombre(nuevoNombre);
+                cliente.setNumeroTel(nuevoNumero);
+                cliente.setPreferencia(nuevaPreferencia);
+
+                // Guarda la lista actualizada en el archivo
+                PersistenciaGeneral.guardarListaClientes(listaClientes, "listaClientes.dat");
+
+                JOptionPane.showMessageDialog(null, "Row edited successfully.");
+            } else {
+                if (jTableClientes.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "Table is Empty.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "PLEASE SELECT SINGLE ROW FOR EDIT.");
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
         }
     }
 }

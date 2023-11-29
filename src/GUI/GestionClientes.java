@@ -169,6 +169,11 @@ public class GestionClientes extends javax.swing.JPanel {
         );
 
         jButton1.setText("Editar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -258,6 +263,10 @@ public class GestionClientes extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_borrarclt_btnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        controlador.obtenerControladorClientes().editarCliente((DefaultTableModel)jTableClientes.getModel(), jTableClientes, listaClientes);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

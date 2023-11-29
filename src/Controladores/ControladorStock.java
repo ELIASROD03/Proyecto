@@ -1,8 +1,13 @@
 
 package Controladores;
 
+import java.awt.List;
 import modelo.Stock;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import modelo.PersistenciaGeneral;
 
 
 /**
@@ -27,4 +32,45 @@ public class ControladorStock {
     public void agregarStock() {
         // Implementa la lógica para agregar un nuevo elemento de inventario a la lista de stock.
     }
+    
+    
+     public void eliminarProductoStock(ArrayList<Stock> listaStock, String nombreStock) {
+        for (int i = 0; i < listaStock.size(); i++) {
+            if (listaStock.get(i).getNombreIngrediente().equals(nombreStock)) {
+                listaStock.remove(i);
+                break;
+            }
+        }
+    }
+     
+      public void editarStock(DefaultTableModel tblModel, JTable tablaStock, ArrayList<Stock> listaStock) {
+        try {
+            if (tablaStock.getSelectedRowCount() == 1) {
+                int selectedRow = tablaStock.getSelectedRow();
+                String nuevoNombre = tblModel.getValueAt(selectedRow, 0).toString();
+                String nuevaCantidad = tblModel.getValueAt(selectedRow, 1).toString();
+
+                Stock stock = listaStock.get(selectedRow);
+                stock.setNombreIngrediente(nuevoNombre);
+                stock.setCantidadIngrediente(nuevaCantidad);
+
+                // Guarda la lista actualizada en el archivo
+                PersistenciaGeneral.guardarListaStock(listaStock, "listaStock.dat");
+
+                JOptionPane.showMessageDialog(null, "Row edited successfully.");
+            } else {
+                if (tablaStock.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "Table is Empty.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "PLEASE SELECT SINGLE ROW FOR EDIT.");
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex.getMessage());
+        }
+    }
+     
+     
+     
 }
