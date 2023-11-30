@@ -5,6 +5,7 @@
 package GUI;
 
 import Controladores.ControladorPrincipal;
+import Controladores.ControladorStock;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -27,6 +28,8 @@ public class RealizarPedido extends javax.swing.JPanel {
         this.listaPlatillos = contralador.obtenerPersistenciaGeneral().cargarListaPlatillos("listaPlatillos.dat");
         
         contralador.obtenerControladorPlatillos().actualizarTablaPlatillos(tablaPlatillos, listaPlatillos);
+        
+        
     }
     
     
@@ -267,7 +270,7 @@ public class RealizarPedido extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-      
+     
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

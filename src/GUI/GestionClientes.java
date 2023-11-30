@@ -25,12 +25,12 @@ public class GestionClientes extends javax.swing.JPanel {
      */
     public GestionClientes(ControladorPrincipal controlador) {
         initComponents();
-        this.controlador = controlador;
+       
         this.listaClientes = PersistenciaGeneral.cargarListaClientes("listaClientes.dat");
         
         actualizarTablaClientes();
     }
-    
+    //poner este metodo en su controlador correspondiente
      private void actualizarTablaClientes() {
         DefaultTableModel modeloTabla = (DefaultTableModel) jTableClientes.getModel();
         modeloTabla.setRowCount(0); // Limpiar la tabla antes de agregar nuevas filas
@@ -38,6 +38,10 @@ public class GestionClientes extends javax.swing.JPanel {
         for (Cliente cliente : listaClientes) {
             modeloTabla.addRow(new Object[]{cliente.getNombre(),cliente.getNumeroTel(),cliente.getPreferencia()});
         }
+        
+        
+        
+        
      }
 
     /**

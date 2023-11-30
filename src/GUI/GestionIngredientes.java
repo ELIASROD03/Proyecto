@@ -29,7 +29,7 @@ public class GestionIngredientes extends javax.swing.JPanel {
         actualizarTablaStock();
         
     }
-    
+    //poner este metodo en su controlador correspondiente
     private void actualizarTablaStock() {
         DefaultTableModel modeloTabla = (DefaultTableModel) tablaStock.getModel();
         modeloTabla.setRowCount(0); // Limpiar la tabla antes de agregar nuevas filas

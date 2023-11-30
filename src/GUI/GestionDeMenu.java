@@ -29,7 +29,7 @@ public class GestionDeMenu extends javax.swing.JPanel {
       this.listaPlatillos = PersistenciaGeneral.cargarListaPlatillos("listaPlatillos.dat");
 
         controlador.obtenerControladorPlatillos().actualizarTablaPlatillos(jTablePlatillos, listaPlatillos);
-       // actualizarTablaPlatillos();
+      
         
     }
     
