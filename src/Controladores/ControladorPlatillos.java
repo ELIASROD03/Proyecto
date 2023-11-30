@@ -65,6 +65,32 @@ public class ControladorPlatillos {
             System.out.println(ex.getMessage());
         }
     }
+        
+    public void actualizarTablaSegunCategoria(JTable tablaPlatillos, ArrayList<Platillos> listaPlatillos, String categoriaSeleccionada) {
+        ArrayList<Platillos> platillosFiltrados = filtrarPlatillosPorCategoria(listaPlatillos, categoriaSeleccionada);
+        actualizarTablaPlatillos(tablaPlatillos, platillosFiltrados);
+    }
+
+    private ArrayList<Platillos> filtrarPlatillosPorCategoria(ArrayList<Platillos> listaPlatillos, String categoria) {
+        ArrayList<Platillos> platillosFiltrados = new ArrayList<>();
+
+        for (Platillos platillo : listaPlatillos) {
+            if (platillo.getMomentodia().equalsIgnoreCase(categoria)) {
+                platillosFiltrados.add(platillo);
+            }
+        }
+
+        return platillosFiltrados;
+    }
+
+    public void actualizarTablaPlatillos(JTable tablaPlatillos, ArrayList<Platillos> platillos) {
+        DefaultTableModel tblModel = (DefaultTableModel) tablaPlatillos.getModel();
+        tblModel.setRowCount(0);
+
+        for (Platillos platillo : platillos) {
+            tblModel.addRow(new Object[]{platillo.getNombrePlatillo(), platillo.getPrecio(),platillo.getDescripcion(), platillo.getMomentodia()});
+        }
+    }
     
 }
 

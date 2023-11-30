@@ -1,9 +1,8 @@
 package modelo;
 
-import Controladores.ControladorPrincipal;
+
 import GUI.ControladorVentanas;
-import GUI.PantallaPrincipal;
-import com.sun.java.accessibility.util.AWTEventMonitor;
+
 
 
 public class App {

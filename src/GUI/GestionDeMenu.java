@@ -28,19 +28,12 @@ public class GestionDeMenu extends javax.swing.JPanel {
       this.controlador = controlador; 
       this.listaPlatillos = PersistenciaGeneral.cargarListaPlatillos("listaPlatillos.dat");
 
-        // Mostrar la lista en la tabla
-        actualizarTablaPlatillos();
+        controlador.obtenerControladorPlatillos().actualizarTablaPlatillos(jTablePlatillos, listaPlatillos);
+       // actualizarTablaPlatillos();
         
     }
     
-     private void actualizarTablaPlatillos() {
-        DefaultTableModel modeloTabla = (DefaultTableModel) jTablePlatillos.getModel();
-        modeloTabla.setRowCount(0); // Limpiar la tabla antes de agregar nuevas filas
-
-        for (Platillos platillo : listaPlatillos) {
-            modeloTabla.addRow(new Object[]{platillo.getNombrePlatillo(), platillo.getPrecio(), platillo.getDescripcion(), platillo.getMomentodia(),});
-        }
-    }
+    
     
 
     /**
@@ -105,7 +98,7 @@ public class GestionDeMenu extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nombre", "Precio", "Descripción", "Momento", "Ingredientes"
+                "Nombre", "Precio", "Momento", "Descripción"
             }
         ));
         jScrollPane1.setViewportView(jTablePlatillos);
@@ -328,7 +321,8 @@ public class GestionDeMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
+       String categoriaSeleccionada = jComboBox2.getSelectedItem().toString();
+        controlador.obtenerControladorPlatillos().actualizarTablaSegunCategoria(jTablePlatillos, listaPlatillos, categoriaSeleccionada);
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged

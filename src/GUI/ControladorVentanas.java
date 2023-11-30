@@ -15,7 +15,6 @@ public class ControladorVentanas {
     public ControladorVentanas() {
         controladorPrincipal = new ControladorPrincipal();
         pantallaPrincipal = new PantallaPrincipal(controladorPrincipal);
-       
         gestiondemenu = new GestionDeMenu(controladorPrincipal);
         
 

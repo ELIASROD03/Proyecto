@@ -227,7 +227,7 @@
                   <Table columnCount="3" rowCount="0">
                     <Column editable="true" title="Nombre del Cliente" type="java.lang.Object"/>
                     <Column editable="true" title="N&#xfa;mero Tel&#xe9;fonico" type="java.lang.Object"/>
-                    <Column editable="true" title="Correo Electr&#xf3;nico" type="java.lang.Object"/>
+                    <Column editable="true" title="Preferencia" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

@@ -1,6 +1,8 @@
 
 package Controladores;
 
+import modelo.PersistenciaGeneral;
+
 
 
 /**
@@ -10,7 +12,7 @@ public class ControladorPrincipal {
     private ControladorClientes controladorClt;  // Controlador de clientes
     private ControladorPlatillos controladorPlt;  // Controlador de platillos
     private ControladorStock controladorStk;  // Controlador de stock
-
+    private PersistenciaGeneral persistenciageneral;
     /**
      * Constructor de la clase ControladorPrincipal. Inicializa los controladores de clientes, platillos y stock.
      */
@@ -18,6 +20,11 @@ public class ControladorPrincipal {
         controladorClt = new ControladorClientes();
         controladorPlt = new ControladorPlatillos();
         controladorStk = new ControladorStock();
+        persistenciageneral = new PersistenciaGeneral();
+    }
+    
+    public PersistenciaGeneral obtenerPersistenciaGeneral(){
+        return persistenciageneral;
     }
 
     /**

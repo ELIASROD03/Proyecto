@@ -146,7 +146,7 @@ public class GestionClientes extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nombre del Cliente", "Número Teléfonico", "Correo Electrónico"
+                "Nombre del Cliente", "Número Teléfonico", "Preferencia"
             }
         ));
         jScrollPane1.setViewportView(jTableClientes);

@@ -351,18 +351,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       if(!this.jButton1.isSelected()){
-           this.jButton1.setSelected(true);
-           this.jButton2.setSelected(false);
-           this.jButton3.setSelected(false);
-           
-          // jpn_1.setVisible(true);
-           //jpn_2.setVisible(false);
-           //jpn_3.setVisible(false);
-           
-        RealizarPedido RealizarPedido1 = new RealizarPedido();
+
+        RealizarPedido RealizarPedido1 = new RealizarPedido(controlador);
         ShowPanel(RealizarPedido1);
-       }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -372,18 +363,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         if(!this.jButton3.isSelected()){
-           this.jButton1.setSelected(false);
-           this.jButton2.setSelected(false);
-           this.jButton3.setSelected(true);
-           
-           //jpn_3.setVisible(true);
-            //jpn_1.setVisible(false);
-            //jpn_2.setVisible(false);
-            
+       
         Reporte report = new Reporte();
         ShowPanel(report);
-       }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
