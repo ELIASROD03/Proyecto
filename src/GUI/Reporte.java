@@ -4,18 +4,95 @@
  */
 package GUI;
 
+import Controladores.ControladorPrincipal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import modelo.Pedido;
+
 /**
  *
  * @author blanc
  */
 public class Reporte extends javax.swing.JPanel {
-
-    /**
-     * Creates new form Reporte
-     */
-    public Reporte() {
+     private ControladorPrincipal controlador;
+    private ArrayList<Pedido> listaPedidos;
+    Set<LocalDate> fechasUnicas = new HashSet<>();
+    
+    public Reporte(ControladorPrincipal controlador) {
         initComponents();
+        this.controlador = controlador;
+        this.listaPedidos = controlador.obtenerPersistenciaGeneral().cargarListaRegistro("listaPedidos.dat");
+       
+       
+        jTableFechas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    // Obtener la fila seleccionada en la tabla de fechas
+                    int filaSeleccionada = jTableFechas.getSelectedRow();
+
+                    // Si hay una fila seleccionada, mostrar detalles en la otra tabla
+                    if (filaSeleccionada != -1) {
+                        LocalDate fechaSeleccionada = listaPedidos.get(filaSeleccionada).getFecha();
+                        mostrarDetallesPorFecha(fechaSeleccionada);
+                    }
+                }
+            }
+        });
+         actualizarTablaFechas();
     }
+    private void actualizarTablaFechas() {
+    DefaultTableModel modeloTablaFechas = (DefaultTableModel) jTableFechas.getModel();
+    modeloTablaFechas.setRowCount(0);
+
+    for (Pedido pedido : listaPedidos) {
+        boolean fechaExistente = false;
+
+        // Buscar si la fecha ya está en la tabla
+        for (int i = 0; i < modeloTablaFechas.getRowCount(); i++) {
+            LocalDate fechaTabla = (LocalDate) modeloTablaFechas.getValueAt(i, 0);
+            if (fechaTabla.equals(pedido.getFecha())) {
+                fechaExistente = true;
+                // Actualizar otros datos del pedido en la fila existente
+                modeloTablaFechas.setValueAt(pedido.getTotalVenta(), i, 1);
+                break;
+            }
+        }
+
+        // Si la fecha no está en la tabla, agregarla como nueva fila
+        if (!fechaExistente) {
+            modeloTablaFechas.addRow(new Object[]{pedido.getFecha(), /* Otros datos del pedido */});
+        }
+    }
+}
+
+
+    
+    
+
+    // Método para mostrar detalles en la tabla de platillos según la fecha seleccionada
+    private void mostrarDetallesPorFecha(LocalDate fechaSeleccionada) {
+        DefaultTableModel modeloTablaDetalles = (DefaultTableModel) jTableDetalles.getModel();
+        modeloTablaDetalles.setRowCount(0); // Limpiar la tabla antes de agregar nuevas filas
+
+        // Agregar filas a la tabla de detalles con los datos de los pedidos para la fecha seleccionada
+        for (Pedido pedido : listaPedidos) {
+            if (pedido.getFecha().equals(fechaSeleccionada)) {
+                modeloTablaDetalles.addRow(new Object[]{
+                        pedido.getNombrePlatillo(),
+                        pedido.getCantidadPlt(),
+                        pedido.getTotalPorPlatillo()
+                });
+            }
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,10 +106,10 @@ public class Reporte extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableFechas = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableDetalles = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(192, 232, 192));
         setForeground(new java.awt.Color(192, 232, 192));
@@ -42,15 +119,23 @@ public class Reporte extends javax.swing.JPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha del Pedido"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableFechas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "Día", "Total Vendido"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableFechas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -70,15 +155,23 @@ public class Reporte extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Platillos consumido esa Fecha"));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDetalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre del Platillo", "Precio"
+                "Nombre del Platillo", "Cantidad", "Total"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTableDetalles);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -132,7 +225,7 @@ public class Reporte extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableDetalles;
+    private javax.swing.JTable jTableFechas;
     // End of variables declaration//GEN-END:variables
 }

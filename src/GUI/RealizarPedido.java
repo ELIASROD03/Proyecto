@@ -6,6 +6,9 @@ package GUI;
 
 import Controladores.ControladorPrincipal;
 import Controladores.ControladorStock;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -13,6 +16,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import modelo.Pedido;
 import modelo.Platillos;
 
 /**
@@ -20,16 +24,61 @@ import modelo.Platillos;
  * @author blanc
  */
 public class RealizarPedido extends javax.swing.JPanel {
-    
+    ControladorPrincipal controlador;
     private ArrayList<Platillos> listaPlatillos;
+    private ArrayList <Pedido> listaPedidos;
     
-    public RealizarPedido(ControladorPrincipal contralador) {
+    public RealizarPedido(ControladorPrincipal controlador) {
         initComponents();
-        this.listaPlatillos = contralador.obtenerPersistenciaGeneral().cargarListaPlatillos("listaPlatillos.dat");
+        this.controlador = controlador;
+        this.listaPlatillos = controlador.obtenerPersistenciaGeneral().cargarListaPlatillos("listaPlatillos.dat");
+        this.listaPedidos = controlador.obtenerPersistenciaGeneral().cargarListaRegistro("listaPedidos.dat");
         
-        contralador.obtenerControladorPlatillos().actualizarTablaPlatillos(tablaPlatillos, listaPlatillos);
+        controlador.obtenerControladorPlatillos().actualizarTablaPlatillos(tablaPlatillos, listaPlatillos);
         
+        tablaPlatillos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    agregarAlCarrito();
+                }
+            }
+        });
         
+    }
+    
+    private void agregarAlCarrito(){
+        DefaultTableModel modeloPlatillos = (DefaultTableModel) tablaPlatillos.getModel();
+        DefaultTableModel modeloCarrito = (DefaultTableModel) tablaCarrito.getModel();
+
+        // Obtener la fila seleccionada
+        int filaSeleccionada = tablaPlatillos.getSelectedRow();
+         String nombrePlatillo = null;
+         double precio = 0.0;
+
+         if (filaSeleccionada != -1) {
+            try {
+                 nombrePlatillo = modeloPlatillos.getValueAt(filaSeleccionada, 0).toString();
+                 precio = Double.parseDouble(modeloPlatillos.getValueAt(filaSeleccionada, 1).toString());
+                 // Resto del código...
+                }catch (NullPointerException | NumberFormatException ex) {
+                ex.printStackTrace(); // Otra acción apropiada para manejar la excepción
+                }
+            
+             int filaEnCarrito = controlador.obtenerControladorRegistro().encontrarFilaEnCarrito(modeloCarrito, nombrePlatillo);
+                if (filaEnCarrito != -1) {
+                // Si ya está en el carrito, incrementar la cantidad y actualizar el precio
+                int cantidadActual = Integer.parseInt(modeloCarrito.getValueAt(filaEnCarrito, 1).toString()) + 1;
+                double precioTotal = cantidadActual * precio;
+
+                modeloCarrito.setValueAt(cantidadActual, filaEnCarrito, 1);
+                modeloCarrito.setValueAt(precioTotal, filaEnCarrito, 2);
+            } else {
+                // Si no está en el carrito, agregar una nueva fila
+                modeloCarrito.addRow(new Object[]{nombrePlatillo, 1, precio});
+            }
+             controlador.obtenerControladorRegistro().calcularTotal(modeloCarrito,total_txt);
+         }    
     }
     
     
@@ -41,7 +90,7 @@ public class RealizarPedido extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        total_txt = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
@@ -49,11 +98,10 @@ public class RealizarPedido extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Pagar_btn = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaRpedido = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
+        tablaCarrito = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaPlatillos = new javax.swing.JTable();
 
@@ -75,9 +123,9 @@ public class RealizarPedido extends javax.swing.JPanel {
 
         jLabel4.setText("Total: ");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        total_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                total_txtActionPerformed(evt);
             }
         });
 
@@ -151,58 +199,40 @@ public class RealizarPedido extends javax.swing.JPanel {
                         .addContainerGap())))
         );
 
-        jButton3.setText("Pagar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Pagar_btn.setText("Pagar");
+        Pagar_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                Pagar_btnActionPerformed(evt);
             }
         });
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro de Pedidos"));
 
-        tablaRpedido.setModel(new javax.swing.table.DefaultTableModel(
+        tablaCarrito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "N° de Pedido", "Nombre del Cliente", "Platillo", "Cantidad"
+                "Platillo", "Cantidad", "SubTotal"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tablaRpedido.addMouseListener(new java.awt.event.MouseAdapter() {
+        ));
+        tablaCarrito.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaRpedidoMouseClicked(evt);
+                tablaCarritoMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tablaRpedido);
+        jScrollPane1.setViewportView(tablaCarrito);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
         );
-
-        jButton4.setText("Editar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
 
         tablaPlatillos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tablaPlatillos.setModel(new javax.swing.table.DefaultTableModel(
@@ -212,7 +242,15 @@ public class RealizarPedido extends javax.swing.JPanel {
             new String [] {
                 "Nombre", "Precio", "Momento"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tablaPlatillos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -223,14 +261,12 @@ public class RealizarPedido extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jButton4)
-                .addGap(682, 682, 682)
-                .addComponent(jButton3)
+                .addGap(769, 769, 769)
+                .addComponent(Pagar_btn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(total_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 23, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -256,10 +292,9 @@ public class RealizarPedido extends javax.swing.JPanel {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(total_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jButton3))
+                    .addComponent(Pagar_btn))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -278,25 +313,23 @@ public class RealizarPedido extends javax.swing.JPanel {
         // Crear un array con los datos a agregar a la tabla
         String data[] = {spinnerValue, textFieldValue};
 
-        DefaultTableModel tblModel = (DefaultTableModel) tablaRpedido.getModel();
+        DefaultTableModel tblModel = (DefaultTableModel) tablaCarrito.getModel();
         tblModel.addRow(data);
 
         JOptionPane.showMessageDialog(this, "Datos agregados correctamente");
 
 
-        // Limpiar el JTextField
-        jTextField1.setText("");
-        }
+          } 
             
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        DefaultTableModel tblModel = (DefaultTableModel)tablaRpedido.getModel();
+        DefaultTableModel tblModel = (DefaultTableModel)tablaCarrito.getModel();
         
-        if(tablaRpedido.getSelectedRowCount() == 1){
-            tblModel.removeRow(tablaRpedido.getSelectedRow());
+        if(tablaCarrito.getSelectedRowCount() == 1){
+            tblModel.removeRow(tablaCarrito.getSelectedRow());
         }else{
-            if(tablaRpedido.getRowCount()==0){
+            if(tablaCarrito.getRowCount()==0){
                 JOptionPane.showMessageDialog(this, "Table is Empty.");
             }else{
                 JOptionPane.showMessageDialog(this, "PLEASE SELESCT sINGLE rOW FOR DELETE.");
@@ -304,7 +337,7 @@ public class RealizarPedido extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void tablaRpedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaRpedidoMouseClicked
+    private void tablaCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCarritoMouseClicked
         //int index = jTable1.getSelectedRow();
     
    // if (index != -1) { // Asegurarse de que se haya seleccionado una fila
@@ -330,26 +363,56 @@ public class RealizarPedido extends javax.swing.JPanel {
        //  jtRowData.NumeroDePedido.setText(NumeroDePedido);
         // jtRowData.NombreDelCliente.setText(NombreDelCliente);
        //  }
-    }//GEN-LAST:event_tablaRpedidoMouseClicked
+    }//GEN-LAST:event_tablaCarritoMouseClicked
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void total_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_total_txtActionPerformed
       
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_total_txtActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void Pagar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pagar_btnActionPerformed
+        DefaultTableModel modeloCarrito = (DefaultTableModel) tablaCarrito.getModel();
         
-    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        System.out.println("Tamaño de la lista de pedidos antes de agregar: " + listaPedidos.size());
+        for (Pedido pedido : listaPedidos) {
+        System.out.println("Pedido existente: " + pedido);
+}
+
+        String numeroPedido = String.valueOf(jSpinner1.getValue());
+        String nombreCliente = jTextField1.getText();
+        LocalDate fecha = LocalDate.now();
+        String totalVenta = total_txt.getText();
+    
+
+       
+        for (int i = 0; i < modeloCarrito.getRowCount(); i++) {
+               String nombrePlatillo = modeloCarrito.getValueAt(i, 0).toString();
+               String cantidadPlatillos = modeloCarrito.getValueAt(i, 1).toString();
+               String cantidadPorPlatillo = modeloCarrito.getValueAt(i, 2).toString();
+            Pedido pedido = new Pedido(fecha,
+                    numeroPedido, 
+                    cantidadPorPlatillo, 
+                    nombrePlatillo, totalVenta,
+                    cantidadPlatillos, 
+                    nombreCliente);
+                    listaPedidos.add(pedido);
+        }
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+        System.out.println("Tamaño de la lista de pedidos después de agregar: " + listaPedidos.size());
+        for (Pedido pedido : listaPedidos) {
+        System.out.println("Pedido actualizado: " + pedido);
+}
+        
+        controlador.obtenerPersistenciaGeneral().guardarListaRegistro(listaPedidos,"listaPedidos.dat");
+        
+        
+    }//GEN-LAST:event_Pagar_btnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Pagar_btn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -361,8 +424,8 @@ public class RealizarPedido extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tablaCarrito;
     private javax.swing.JTable tablaPlatillos;
-    private javax.swing.JTable tablaRpedido;
+    private javax.swing.JTextField total_txt;
     // End of variables declaration//GEN-END:variables
 }

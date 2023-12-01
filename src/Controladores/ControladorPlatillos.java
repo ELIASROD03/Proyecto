@@ -40,14 +40,14 @@ public class ControladorPlatillos {
                 int selectedRow = jTablePlatillos.getSelectedRow();
                 String nuevoNombre = tblModel.getValueAt(selectedRow, 0).toString();
                 String nuevoPrecio = tblModel.getValueAt(selectedRow, 1).toString();
-                String nuevaDescripcion = tblModel.getValueAt(selectedRow, 2).toString();
-                String nuevoMomennto = tblModel.getValueAt(selectedRow, 2).toString();
+                String nuevoMomento = tblModel.getValueAt(selectedRow, 2).toString();
+                String nuevaDescripcion = tblModel.getValueAt(selectedRow, 3).toString();
 
                 Platillos platillo = listaPlatillos.get(selectedRow);
                 platillo.setNombrePlatillo(nuevoNombre);
                 platillo.setPrecio(nuevoPrecio);
                 platillo.setDescripcion(nuevaDescripcion);
-                platillo.setMomentodia(nuevoMomennto);
+                platillo.setMomentodia(nuevoMomento);
 
                 // Guarda la lista actualizada en el archivo
                 PersistenciaGeneral.guardarListaPlatillos(listaPlatillos, "listaPlatillos.dat");
@@ -88,7 +88,7 @@ public class ControladorPlatillos {
         tblModel.setRowCount(0);
 
         for (Platillos platillo : platillos) {
-            tblModel.addRow(new Object[]{platillo.getNombrePlatillo(), platillo.getPrecio(),platillo.getDescripcion(), platillo.getMomentodia()});
+            tblModel.addRow(new Object[]{platillo.getNombrePlatillo(), platillo.getPrecio(),platillo.getMomentodia(), platillo.getDescripcion(),platillo.getNombreIngrediente()+(";")+platillo.getCantidadIngrediente()});
         }
     }
     

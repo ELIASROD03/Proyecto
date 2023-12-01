@@ -25,7 +25,7 @@ public class GestionClientes extends javax.swing.JPanel {
      */
     public GestionClientes(ControladorPrincipal controlador) {
         initComponents();
-       
+        this.controlador = controlador;
         this.listaClientes = PersistenciaGeneral.cargarListaClientes("listaClientes.dat");
         
         actualizarTablaClientes();
@@ -67,7 +67,7 @@ public class GestionClientes extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableClientes = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        editar_btn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(192, 232, 192));
 
@@ -172,10 +172,10 @@ public class GestionClientes extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jButton1.setText("Editar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        editar_btn.setText("Editar");
+        editar_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                editar_btnActionPerformed(evt);
             }
         });
 
@@ -196,7 +196,7 @@ public class GestionClientes extends javax.swing.JPanel {
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(editar_btn)))
                 .addGap(52, 52, 52))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -218,7 +218,7 @@ public class GestionClientes extends javax.swing.JPanel {
                         .addGap(67, 67, 67)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15)
-                .addComponent(jButton1)
+                .addComponent(editar_btn)
                 .addContainerGap(38, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -270,15 +270,15 @@ public class GestionClientes extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_borrarclt_btnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        controlador.obtenerControladorClientes().editarCliente((DefaultTableModel)jTableClientes.getModel(), jTableClientes, listaClientes);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void editar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editar_btnActionPerformed
+        controlador.obtenerControladorClientes().editarCliente((DefaultTableModel) jTableClientes.getModel(), jTableClientes, listaClientes);
+    }//GEN-LAST:event_editar_btnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarclt_btn;
     private javax.swing.JButton borrarclt_btn;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton editar_btn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

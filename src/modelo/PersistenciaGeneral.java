@@ -84,4 +84,27 @@ public class PersistenciaGeneral {
         return listaLeida;
     }
     
+    
+    public static void guardarListaRegistro(ArrayList<Pedido> listaRegistro, String nombreArchivo) {
+        try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(nombreArchivo))) {
+            salida.writeObject(listaRegistro);
+            System.out.println("Lista de Registro guardada con éxito en " + nombreArchivo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<Pedido> cargarListaRegistro(String nombreArchivo) {
+        ArrayList<Pedido> listaLeida = new ArrayList<>();
+        try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(nombreArchivo))) {
+            listaLeida = (ArrayList<Pedido>) entrada.readObject();
+            System.out.println("Lista de Registro cargada con éxito desde " + nombreArchivo);
+        } catch (FileNotFoundException e) {
+            System.out.println("El archivo " + nombreArchivo + " no existe. Se creará uno nuevo.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return listaLeida;
+    }
+    
 }

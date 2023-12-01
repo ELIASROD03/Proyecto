@@ -13,6 +13,7 @@ public class ControladorPrincipal {
     private ControladorPlatillos controladorPlt;  // Controlador de platillos
     private ControladorStock controladorStk;  // Controlador de stock
     private PersistenciaGeneral persistenciageneral;
+    private ControladorPedido controladorPed;
     /**
      * Constructor de la clase ControladorPrincipal. Inicializa los controladores de clientes, platillos y stock.
      */
@@ -21,6 +22,11 @@ public class ControladorPrincipal {
         controladorPlt = new ControladorPlatillos();
         controladorStk = new ControladorStock();
         persistenciageneral = new PersistenciaGeneral();
+        controladorPed = new ControladorPedido();
+    }
+    
+    public ControladorPedido obtenerControladorRegistro(){
+        return controladorPed;
     }
     
     public PersistenciaGeneral obtenerPersistenciaGeneral(){
@@ -53,5 +59,7 @@ public class ControladorPrincipal {
     public ControladorStock obtenerControladorStock() {
         return controladorStk;
     }
+    
+    
 }
 

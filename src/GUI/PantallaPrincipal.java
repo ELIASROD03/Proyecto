@@ -359,7 +359,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        
-        Reporte report = new Reporte();
+        Reporte report = new Reporte(controlador);
         ShowPanel(report);
     }//GEN-LAST:event_jButton3ActionPerformed
 

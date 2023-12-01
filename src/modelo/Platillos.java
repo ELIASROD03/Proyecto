@@ -8,18 +8,23 @@ import java.io.Serializable;
  * La clase Platillos representa un objeto que describe un platillo en un menú de restaurante.
  * Cada platillo tiene un nombre, una descripción y un precio asociado.
  */
-public class Platillos implements Serializable{
+public class Platillos extends Stock implements Serializable{
     private String nombrePlatillo;
     private String descripcion;
     private String precio;
     private String momentodia;
 
-    public Platillos(String nombrePlatillo, String descripcion, String precio, String momentodia) {
+
+
+    public Platillos(String nombrePlatillo, String descripcion, String precio, String momentodia, String nombreIngrediente, String cantidadIngrediente) {
+        super(nombreIngrediente, cantidadIngrediente);
         this.nombrePlatillo = nombrePlatillo;
         this.descripcion = descripcion;
         this.precio = precio;
         this.momentodia = momentodia;
     }
+    
+    
 
     public String getNombrePlatillo() {
         return nombrePlatillo;
