@@ -1,5 +1,5 @@
 # Proyecto Programación Orientada  Objetos
-###Sistema de Gestión de Cocina Económica 
+##Sistema de Gestión de Cocina Económica 
 
 <ol>
 
