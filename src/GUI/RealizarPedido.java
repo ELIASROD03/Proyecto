@@ -18,6 +18,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import modelo.Pedido;
 import modelo.Platillos;
+import modelo.Stock;
 
 /**
  *
@@ -78,8 +79,38 @@ public class RealizarPedido extends javax.swing.JPanel {
                 modeloCarrito.addRow(new Object[]{nombrePlatillo, 1, precio});
             }
              controlador.obtenerControladorRegistro().calcularTotal(modeloCarrito,total_txt);
-         }    
+         }
+          restarDelStock(platilloSeleccionado, cantidadVendida);
+         
     }
+    
+    private void restarDelStock(Platillos platillo, int cantidad) {
+    // Obtener el stock correspondiente al platillo
+        Stock stock = obtenerStockPorNombre(platillo.getNombrePlatillo());
+
+    // Restar la cantidad vendida del stock
+    if (stock != null) {
+        int cantidadEnStock = Integer.parseInt(stock.getCantidadIngrediente());
+        cantidadEnStock -= cantidad;
+
+        // Actualizar la cantidad en la lista de Stock
+        stock.setCantidadIngrediente(String.valueOf(cantidadEnStock));
+    }
+}
+    
+    private Stock obtenerStockPorNombre(String nombre) {
+    for (Stock stock : listaStock) {
+        if (stock.getNombreIngrediente().equals(nombre)) {
+            return stock;
+        }
+    }
+    return null; // Si no se encuentra el stock con el nombre especificado
+}
+
+    
+    
+    
+    
     
     
     
@@ -338,31 +369,7 @@ public class RealizarPedido extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tablaCarritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaCarritoMouseClicked
-        //int index = jTable1.getSelectedRow();
-    
-   // if (index != -1) { // Asegurarse de que se haya seleccionado una fila
-       //  TableModel model = jTable1.getModel();
-        
-        // Obtener y verificar el valor de la celda en la columna 0
-        // Object rawValueNumeroDePedido = model.getValueAt(index, 0);
-       //  String NumeroDePedido = (rawValueNumeroDePedido != null) ? rawValueNumeroDePedido.toString() : "";
-
-        // Obtener y verificar el valor de la celda en la columna 2
-      //   Object rawValueNombreDelCliente = model.getValueAt(index, 1);
-       //  String NombreDelCliente = (rawValueNombreDelCliente != null) ? rawValueNombreDelCliente.toString() : "";
-
-        // Crear e instanciar la ventana jtRowData
-        // TablaRealizarPedido jtRowData = new TablaRealizarPedido();
-        
-        // Configurar y mostrar la ventana
-       //  jtRowData.setVisible(true);
-        // jtRowData.pack();
-        // jtRowData.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        // Configurar los valores en jtRowData
-       //  jtRowData.NumeroDePedido.setText(NumeroDePedido);
-        // jtRowData.NombreDelCliente.setText(NombreDelCliente);
-       //  }
+       
     }//GEN-LAST:event_tablaCarritoMouseClicked
 
     private void total_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_total_txtActionPerformed
@@ -376,12 +383,14 @@ public class RealizarPedido extends javax.swing.JPanel {
         System.out.println("Tamaño de la lista de pedidos antes de agregar: " + listaPedidos.size());
         for (Pedido pedido : listaPedidos) {
         System.out.println("Pedido existente: " + pedido);
-}
+        }
 
         String numeroPedido = String.valueOf(jSpinner1.getValue());
         String nombreCliente = jTextField1.getText();
         LocalDate fecha = LocalDate.now();
         String totalVenta = total_txt.getText();
+        
+        controlador.obtenerControladorStock().procesarIngredientes(listaPedidos);
     
 
        
@@ -401,10 +410,11 @@ public class RealizarPedido extends javax.swing.JPanel {
         System.out.println("Tamaño de la lista de pedidos después de agregar: " + listaPedidos.size());
         for (Pedido pedido : listaPedidos) {
         System.out.println("Pedido actualizado: " + pedido);
-}
+        }
         
         controlador.obtenerPersistenciaGeneral().guardarListaRegistro(listaPedidos,"listaPedidos.dat");
-        
+         modeloCarrito.setRowCount(0);
+        total_txt.setText("0.0");
         
     }//GEN-LAST:event_Pagar_btnActionPerformed
 

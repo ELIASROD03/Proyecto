@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.Pedido;
 import modelo.PersistenciaGeneral;
 
 
@@ -15,7 +16,7 @@ import modelo.PersistenciaGeneral;
  */
 public class ControladorStock {
     private ArrayList<Stock> listaStock;  // Lista que almacena objetos de la clase Stock.
-
+    private ArrayList<Pedido> listaPedidos;
     /**
      * Constructor de la clase ControladorStock. Inicializa la lista de elementos de inventario (stock).
      */
@@ -69,6 +70,53 @@ public class ControladorStock {
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex.getMessage());
         }
+    }
+      
+      
+          public void procesarIngredientes(ArrayList<Pedido> listaPedidos) {
+        for (Pedido pedido : listaPedidos) {
+            procesarIngredientePedido(pedido);
+        }
+    }
+
+        public void procesarIngredientePedido(Pedido pedido) {
+            for (Stock stockPedido : pedido.getListaIngredientes()) {
+            String nombreIngrediente = stockPedido.getNombreIngrediente();
+            double cantidadIngredientePedido = Double.parseDouble(stockPedido.getCantidadIngrediente());
+
+        Stock stockEnLista = buscarStock(nombreIngrediente);
+
+        if (stockEnLista != null) {
+            double cantidadIngredienteStock = Double.parseDouble(stockEnLista.getCantidadIngrediente());
+
+            if (cantidadIngredienteStock >= cantidadIngredientePedido) {
+                stockEnLista.setCantidadIngrediente(String.valueOf(cantidadIngredienteStock - cantidadIngredientePedido));
+            } else {
+                mostrarAlerta("¡Atención! Faltan ingredientes: " + nombreIngrediente);
+            }
+
+            if (cantidadIngredienteStock < 2) {
+                mostrarAlerta("¡Atención! Bajo stock de: " + nombreIngrediente);
+            }
+        } else {
+            mostrarAlerta("¡Atención! No hay existencias de: " + nombreIngrediente);
+        }
+       
+    }
+        PersistenciaGeneral.guardarListaStock(listaStock, "listaStock.dat");
+}
+
+    private Stock buscarStock(String nombreIngrediente) {
+        for (Stock stock : listaStock) {
+            if (stock.getNombreIngrediente().equals(nombreIngrediente)) {
+                return stock;
+            }
+        }
+        return null;
+    }
+
+    private void mostrarAlerta(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
     }
      
      

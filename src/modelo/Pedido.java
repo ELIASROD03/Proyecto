@@ -20,6 +20,7 @@ public class Pedido implements Serializable{
     private String totalVenta;
     private String cantidadPlt;
     private String nombreClienteVenta;
+    private ArrayList<Stock> listaIngredientes;
 
     public Pedido(LocalDate fecha, String numeroPedido, String totalPorPlatillo, String nombrePlatillo, String totalVenta, String cantidadPlt, String nombreClienteVenta) {
         this.fecha = fecha;
@@ -29,7 +30,17 @@ public class Pedido implements Serializable{
         this.totalVenta = totalVenta;
         this.cantidadPlt = cantidadPlt;
         this.nombreClienteVenta = nombreClienteVenta;
+        this.listaIngredientes = new ArrayList<>();
     }
+
+    public ArrayList<Stock> getListaIngredientes() {
+        return listaIngredientes;
+    }
+
+    public void setListaIngredientes(ArrayList<Stock> listaIngredientes) {
+        this.listaIngredientes = listaIngredientes;
+    }
+    
 
     public String getTotalPorPlatillo() {
         return totalPorPlatillo;
@@ -48,7 +59,7 @@ public class Pedido implements Serializable{
     }
 
     
-
+    
    
 
     public LocalDate getFecha() {
@@ -92,6 +103,7 @@ public class Pedido implements Serializable{
     public void setNombreClienteVenta(String nombreClienteVenta) {
         this.nombreClienteVenta = nombreClienteVenta;
     }
+    
 
    
 
