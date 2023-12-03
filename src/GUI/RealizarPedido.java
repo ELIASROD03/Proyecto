@@ -80,32 +80,13 @@ public class RealizarPedido extends javax.swing.JPanel {
             }
              controlador.obtenerControladorRegistro().calcularTotal(modeloCarrito,total_txt);
          }
-          restarDelStock(platilloSeleccionado, cantidadVendida);
+       
          
     }
     
-    private void restarDelStock(Platillos platillo, int cantidad) {
-    // Obtener el stock correspondiente al platillo
-        Stock stock = obtenerStockPorNombre(platillo.getNombrePlatillo());
-
-    // Restar la cantidad vendida del stock
-    if (stock != null) {
-        int cantidadEnStock = Integer.parseInt(stock.getCantidadIngrediente());
-        cantidadEnStock -= cantidad;
-
-        // Actualizar la cantidad en la lista de Stock
-        stock.setCantidadIngrediente(String.valueOf(cantidadEnStock));
-    }
-}
+   
     
-    private Stock obtenerStockPorNombre(String nombre) {
-    for (Stock stock : listaStock) {
-        if (stock.getNombreIngrediente().equals(nombre)) {
-            return stock;
-        }
-    }
-    return null; // Si no se encuentra el stock con el nombre especificado
-}
+   
 
     
     
