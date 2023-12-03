@@ -48,26 +48,24 @@ public class RealizarPedido extends javax.swing.JPanel {
         
     }
     
-    private void agregarAlCarrito(){
-        DefaultTableModel modeloPlatillos = (DefaultTableModel) tablaPlatillos.getModel();
-        DefaultTableModel modeloCarrito = (DefaultTableModel) tablaCarrito.getModel();
+private void agregarAlCarrito() {
+    DefaultTableModel modeloPlatillos = (DefaultTableModel) tablaPlatillos.getModel();
+    DefaultTableModel modeloCarrito = (DefaultTableModel) tablaCarrito.getModel();
 
-        // Obtener la fila seleccionada
-        int filaSeleccionada = tablaPlatillos.getSelectedRow();
-         String nombrePlatillo = null;
-         double precio = 0.0;
+    // Obtener la fila seleccionada
+    int filaSeleccionada = tablaPlatillos.getSelectedRow();
+    String nombrePlatillo = null;
+    double precio = 0.0;
 
-         if (filaSeleccionada != -1) {
-            try {
-                 nombrePlatillo = modeloPlatillos.getValueAt(filaSeleccionada, 0).toString();
-                 precio = Double.parseDouble(modeloPlatillos.getValueAt(filaSeleccionada, 1).toString());
-                 // Resto del código...
-                }catch (NullPointerException | NumberFormatException ex) {
-                ex.printStackTrace(); // Otra acción apropiada para manejar la excepción
-                }
-            
-             int filaEnCarrito = controlador.obtenerControladorRegistro().encontrarFilaEnCarrito(modeloCarrito, nombrePlatillo);
-                if (filaEnCarrito != -1) {
+    if (filaSeleccionada != -1) {
+        try {
+            nombrePlatillo = modeloPlatillos.getValueAt(filaSeleccionada, 0).toString();
+            precio = Double.parseDouble(modeloPlatillos.getValueAt(filaSeleccionada, 1).toString());
+
+            // Llama al método para reducir el stock
+           
+            int filaEnCarrito = controlador.obtenerControladorRegistro().encontrarFilaEnCarrito(modeloCarrito, nombrePlatillo);
+            if (filaEnCarrito != -1) {
                 // Si ya está en el carrito, incrementar la cantidad y actualizar el precio
                 int cantidadActual = Integer.parseInt(modeloCarrito.getValueAt(filaEnCarrito, 1).toString()) + 1;
                 double precioTotal = cantidadActual * precio;
@@ -78,11 +76,13 @@ public class RealizarPedido extends javax.swing.JPanel {
                 // Si no está en el carrito, agregar una nueva fila
                 modeloCarrito.addRow(new Object[]{nombrePlatillo, 1, precio});
             }
-             controlador.obtenerControladorRegistro().calcularTotal(modeloCarrito,total_txt);
-         }
-       
-         
+            controlador.obtenerControladorRegistro().calcularTotal(modeloCarrito, total_txt);
+
+        } catch (NullPointerException | NumberFormatException ex) {
+            ex.printStackTrace(); // Otra acción apropiada para manejar la excepción
+        }
     }
+}
     
    
     
@@ -371,7 +371,7 @@ public class RealizarPedido extends javax.swing.JPanel {
         LocalDate fecha = LocalDate.now();
         String totalVenta = total_txt.getText();
         
-        controlador.obtenerControladorStock().procesarIngredientes(listaPedidos);
+       
     
 
        

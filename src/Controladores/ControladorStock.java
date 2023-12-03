@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Pedido;
 import modelo.PersistenciaGeneral;
+import modelo.Platillos;
 
 
 /**
@@ -73,52 +74,30 @@ public class ControladorStock {
     }
       
       
-          public void procesarIngredientes(ArrayList<Pedido> listaPedidos) {
-        for (Pedido pedido : listaPedidos) {
-            procesarIngredientePedido(pedido);
+      public void pagarYGuardar(ArrayList<Platillo> platillosEnCarrito) {
+        // Itera sobre los platillos en el carrito y actualiza la listaStock
+        for (Platillos platillo : platillosEnCarrito) {
+            
+            String nombreIngrediente = platillo.getNombreIngrediente();
+            int cantidadIngrediente = platillo.getCantidadIngrediente();
+
+            // Actualiza la cantidad en listaStock
+            actualizarCantidadEnListaStock(nombreIngrediente, cantidadIngrediente);
         }
+
+        // Guarda la listaStock actualizada en un archivo
+        //guardarListaStockEnArchivo();
     }
 
-        public void procesarIngredientePedido(Pedido pedido) {
-            for (Stock stockPedido : pedido.getListaIngredientes()) {
-            String nombreIngrediente = stockPedido.getNombreIngrediente();
-            double cantidadIngredientePedido = Double.parseDouble(stockPedido.getCantidadIngrediente());
-
-        Stock stockEnLista = buscarStock(nombreIngrediente);
-
-        if (stockEnLista != null) {
-            double cantidadIngredienteStock = Double.parseDouble(stockEnLista.getCantidadIngrediente());
-
-            if (cantidadIngredienteStock >= cantidadIngredientePedido) {
-                stockEnLista.setCantidadIngrediente(String.valueOf(cantidadIngredienteStock - cantidadIngredientePedido));
-            } else {
-                mostrarAlerta("¡Atención! Faltan ingredientes: " + nombreIngrediente);
-            }
-
-            if (cantidadIngredienteStock < 2) {
-                mostrarAlerta("¡Atención! Bajo stock de: " + nombreIngrediente);
-            }
-        } else {
-            mostrarAlerta("¡Atención! No hay existencias de: " + nombreIngrediente);
-        }
-       
-    }
-        PersistenciaGeneral.guardarListaStock(listaStock, "listaStock.dat");
-}
-
-    private Stock buscarStock(String nombreIngrediente) {
-        for (Stock stock : listaStock) {
-            if (stock.getNombreIngrediente().equals(nombreIngrediente)) {
-                return stock;
+    private void actualizarCantidadEnListaStock(String nombrePlatillo, int cantidadPlatillo) {
+        for (Platillos platillo : listaStock) {
+            if (platillo.getNombre().equals(nombrePlatillo)) {
+                platillo.setCantidad(platillo.getCantidad() - cantidadPlatillo);
+                break; // Si encuentras el platillo, sal del bucle
             }
         }
-        return null;
     }
 
-    private void mostrarAlerta(String mensaje) {
-        JOptionPane.showMessageDialog(null, mensaje);
-    }
-     
-     
-     
+      
+        
 }
