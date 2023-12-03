@@ -74,29 +74,7 @@ public class ControladorStock {
     }
       
       
-      public void pagarYGuardar(ArrayList<Platillo> platillosEnCarrito) {
-        // Itera sobre los platillos en el carrito y actualiza la listaStock
-        for (Platillos platillo : platillosEnCarrito) {
-            
-            String nombreIngrediente = platillo.getNombreIngrediente();
-            int cantidadIngrediente = platillo.getCantidadIngrediente();
-
-            // Actualiza la cantidad en listaStock
-            actualizarCantidadEnListaStock(nombreIngrediente, cantidadIngrediente);
-        }
-
-        // Guarda la listaStock actualizada en un archivo
-        //guardarListaStockEnArchivo();
-    }
-
-    private void actualizarCantidadEnListaStock(String nombrePlatillo, int cantidadPlatillo) {
-        for (Platillos platillo : listaStock) {
-            if (platillo.getNombre().equals(nombrePlatillo)) {
-                platillo.setCantidad(platillo.getCantidad() - cantidadPlatillo);
-                break; // Si encuentras el platillo, sal del bucle
-            }
-        }
-    }
+    
 
       
         

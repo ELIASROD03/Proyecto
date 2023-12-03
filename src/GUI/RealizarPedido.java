@@ -48,6 +48,7 @@ public class RealizarPedido extends javax.swing.JPanel {
         
     }
     
+    
 private void agregarAlCarrito() {
     DefaultTableModel modeloPlatillos = (DefaultTableModel) tablaPlatillos.getModel();
     DefaultTableModel modeloCarrito = (DefaultTableModel) tablaCarrito.getModel();
@@ -62,21 +63,34 @@ private void agregarAlCarrito() {
             nombrePlatillo = modeloPlatillos.getValueAt(filaSeleccionada, 0).toString();
             precio = Double.parseDouble(modeloPlatillos.getValueAt(filaSeleccionada, 1).toString());
 
-            // Llama al método para reducir el stock
-           
-            int filaEnCarrito = controlador.obtenerControladorRegistro().encontrarFilaEnCarrito(modeloCarrito, nombrePlatillo);
-            if (filaEnCarrito != -1) {
-                // Si ya está en el carrito, incrementar la cantidad y actualizar el precio
-                int cantidadActual = Integer.parseInt(modeloCarrito.getValueAt(filaEnCarrito, 1).toString()) + 1;
-                double precioTotal = cantidadActual * precio;
+            // Obtener la cantidad de ingredientes necesarios del platillo
+            int cantidadIngredientesNecesarios = obtenerCantidadIngredientesNecesarios(nombrePlatillo);
 
-                modeloCarrito.setValueAt(cantidadActual, filaEnCarrito, 1);
-                modeloCarrito.setValueAt(precioTotal, filaEnCarrito, 2);
+            // Llama al método para reducir el stock
+            if (controladorStock.actualizarStock(nombrePlatillo, cantidadIngredientesNecesarios)) {
+                // Si la actualización del stock fue exitosa
+
+                int filaEnCarrito = controlador.obtenerControladorRegistro().encontrarFilaEnCarrito(modeloCarrito, nombrePlatillo);
+                if (filaEnCarrito != -1) {
+                    // Si ya está en el carrito, incrementar la cantidad y actualizar el precio
+                    int cantidadActual = Integer.parseInt(modeloCarrito.getValueAt(filaEnCarrito, 1).toString()) + 1;
+                    double precioTotal = cantidadActual * precio;
+
+                    modeloCarrito.setValueAt(cantidadActual, filaEnCarrito, 1);
+                    modeloCarrito.setValueAt(precioTotal, filaEnCarrito, 2);
+                } else {
+                    // Si no está en el carrito, agregar una nueva fila
+                    modeloCarrito.addRow(new Object[]{nombrePlatillo, 1, precio});
+                }
+                controlador.obtenerControladorRegistro().calcularTotal(modeloCarrito, total_txt);
             } else {
-                // Si no está en el carrito, agregar una nueva fila
-                modeloCarrito.addRow(new Object[]{nombrePlatillo, 1, precio});
+                // Si la actualización del stock no fue exitosa (por ejemplo, no hay suficientes ingredientes)
+                if (controladorStock.getCantidad(nombrePlatillo) < 3) {
+                    JOptionPane.showMessageDialog(this, "Pocos ingredientes disponibles para el platillo.", "Alerta", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No hay suficientes ingredientes para el platillo.", "Alerta", JOptionPane.WARNING_MESSAGE);
+                }
             }
-            controlador.obtenerControladorRegistro().calcularTotal(modeloCarrito, total_txt);
 
         } catch (NullPointerException | NumberFormatException ex) {
             ex.printStackTrace(); // Otra acción apropiada para manejar la excepción
