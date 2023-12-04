@@ -23,7 +23,7 @@ public class ControladorStock {
      */
     public ControladorStock() {
         this.listaPlatillos = PersistenciaGeneral.cargarListaPlatillos("listaPlatillos.dat");
-        this.listaStock = PersistenciaGeneral.cargarListaStock("listaStock.dat");
+        
     }
 
     /**
@@ -74,13 +74,13 @@ public class ControladorStock {
         }
     }
       
-        public void buscarIngredientePlatillo(String nombrePlatillo) {
+        public void buscarIngredientePlatillo(String nombrePlatillo,ArrayList<Stock>listaStock) {
         for (Platillos platillo : listaPlatillos) {
             if (platillo.getNombrePlatillo().equals(nombrePlatillo)) {
                 String nombreIngrediente = platillo.getNombreIngrediente();
                 // Realizar acciones con el nombre del ingrediente si es necesario
                 System.out.println("Ingrediente del platillo encontrado: " + nombreIngrediente);
-                restarStockPorIngrediente(nombreIngrediente);
+                restarStockPorIngrediente(nombreIngrediente,listaStock);
                 return; // Terminamos el método una vez que encontramos el platillo
             }
         }
@@ -89,7 +89,7 @@ public class ControladorStock {
     }
         
         
-   private void restarStockPorIngrediente(String nombreIngrediente) {
+   private void restarStockPorIngrediente(String nombreIngrediente,ArrayList<Stock>listaStock) {
     for (Stock stock : listaStock) {
         if (stock.getNombreIngrediente().equals(nombreIngrediente)) {
             int cantidadActual = Integer.parseInt(stock.getCantidadIngrediente());
@@ -125,9 +125,7 @@ public class ControladorStock {
       
       
     
-    public void guardarListaStockEnArchivo() {
-        PersistenciaGeneral.guardarListaStock(listaStock, "listaStock.dat");
-    }
+    
       
       
     

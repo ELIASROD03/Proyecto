@@ -28,12 +28,14 @@ public class RealizarPedido extends javax.swing.JPanel {
     ControladorPrincipal controlador;
     private ArrayList<Platillos> listaPlatillos;
     private ArrayList <Pedido> listaPedidos;
+    private ArrayList <Stock> listaStock;
     
     public RealizarPedido(ControladorPrincipal controlador) {
         initComponents();
         this.controlador = controlador;
         this.listaPlatillos = controlador.obtenerPersistenciaGeneral().cargarListaPlatillos("listaPlatillos.dat");
         this.listaPedidos = controlador.obtenerPersistenciaGeneral().cargarListaRegistro("listaPedidos.dat");
+        this.listaStock = controlador.obtenerPersistenciaGeneral().cargarListaStock("listaStock.dat");
         
         controlador.obtenerControladorPlatillos().actualizarTablaPlatillos(tablaPlatillos, listaPlatillos);
         
@@ -352,7 +354,7 @@ public class RealizarPedido extends javax.swing.JPanel {
                     nombreCliente);
                     listaPedidos.add(pedido);
                     
-                    controlador.obtenerControladorStock().buscarIngredientePlatillo(nombrePlatillo);
+                    controlador.obtenerControladorStock().buscarIngredientePlatillo(nombrePlatillo,listaStock);
         }
         
         System.out.println("Tamaño de la lista de pedidos después de agregar: " + listaPedidos.size());
