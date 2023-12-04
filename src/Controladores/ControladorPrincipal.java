@@ -22,7 +22,7 @@ public class ControladorPrincipal {
         controladorPlt = new ControladorPlatillos();
         controladorStk = new ControladorStock();
         persistenciageneral = new PersistenciaGeneral();
-        controladorPed = new ControladorPedido();
+        controladorPed = new ControladorPedido(controladorStk);
     }
     
     public ControladorPedido obtenerControladorRegistro(){

@@ -41,73 +41,18 @@ public class RealizarPedido extends javax.swing.JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    agregarAlCarrito();
+                    DefaultTableModel modeloPlatillos = (DefaultTableModel) tablaPlatillos.getModel();
+                    DefaultTableModel modeloCarrito = (DefaultTableModel) tablaCarrito.getModel();
+                  
+
+                // Llamada al método agregarAlCarrito con los parámetros deseados
+                controlador.obtenerControladorRegistro().agregarAlCarrito(tablaPlatillos, modeloPlatillos, modeloCarrito, total_txt);
                 }
             }
         });
         
     }
-    
-    
-private void agregarAlCarrito() {
-    DefaultTableModel modeloPlatillos = (DefaultTableModel) tablaPlatillos.getModel();
-    DefaultTableModel modeloCarrito = (DefaultTableModel) tablaCarrito.getModel();
-
-    // Obtener la fila seleccionada
-    int filaSeleccionada = tablaPlatillos.getSelectedRow();
-    String nombrePlatillo = null;
-    double precio = 0.0;
-
-    if (filaSeleccionada != -1) {
-        try {
-            nombrePlatillo = modeloPlatillos.getValueAt(filaSeleccionada, 0).toString();
-            precio = Double.parseDouble(modeloPlatillos.getValueAt(filaSeleccionada, 1).toString());
-
-            // Obtener la cantidad de ingredientes necesarios del platillo
-            int cantidadIngredientesNecesarios = obtenerCantidadIngredientesNecesarios(nombrePlatillo);
-
-            // Llama al método para reducir el stock
-            if (controladorStock.actualizarStock(nombrePlatillo, cantidadIngredientesNecesarios)) {
-                // Si la actualización del stock fue exitosa
-
-                int filaEnCarrito = controlador.obtenerControladorRegistro().encontrarFilaEnCarrito(modeloCarrito, nombrePlatillo);
-                if (filaEnCarrito != -1) {
-                    // Si ya está en el carrito, incrementar la cantidad y actualizar el precio
-                    int cantidadActual = Integer.parseInt(modeloCarrito.getValueAt(filaEnCarrito, 1).toString()) + 1;
-                    double precioTotal = cantidadActual * precio;
-
-                    modeloCarrito.setValueAt(cantidadActual, filaEnCarrito, 1);
-                    modeloCarrito.setValueAt(precioTotal, filaEnCarrito, 2);
-                } else {
-                    // Si no está en el carrito, agregar una nueva fila
-                    modeloCarrito.addRow(new Object[]{nombrePlatillo, 1, precio});
-                }
-                controlador.obtenerControladorRegistro().calcularTotal(modeloCarrito, total_txt);
-            } else {
-                // Si la actualización del stock no fue exitosa (por ejemplo, no hay suficientes ingredientes)
-                if (controladorStock.getCantidad(nombrePlatillo) < 3) {
-                    JOptionPane.showMessageDialog(this, "Pocos ingredientes disponibles para el platillo.", "Alerta", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "No hay suficientes ingredientes para el platillo.", "Alerta", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-
-        } catch (NullPointerException | NumberFormatException ex) {
-            ex.printStackTrace(); // Otra acción apropiada para manejar la excepción
-        }
-    }
-}
-    
-   
-    
-   
-
-    
-    
-    
-    
-    
-    
+ 
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -371,10 +316,16 @@ private void agregarAlCarrito() {
       
     }//GEN-LAST:event_total_txtActionPerformed
 
+    
+    
+    
+    
+    
     private void Pagar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pagar_btnActionPerformed
         DefaultTableModel modeloCarrito = (DefaultTableModel) tablaCarrito.getModel();
         
-
+       
+        
         System.out.println("Tamaño de la lista de pedidos antes de agregar: " + listaPedidos.size());
         for (Pedido pedido : listaPedidos) {
         System.out.println("Pedido existente: " + pedido);
@@ -400,6 +351,8 @@ private void agregarAlCarrito() {
                     cantidadPlatillos, 
                     nombreCliente);
                     listaPedidos.add(pedido);
+                    
+                    controlador.obtenerControladorStock().buscarIngredientePlatillo(nombrePlatillo);
         }
         
         System.out.println("Tamaño de la lista de pedidos después de agregar: " + listaPedidos.size());
@@ -410,9 +363,20 @@ private void agregarAlCarrito() {
         controlador.obtenerPersistenciaGeneral().guardarListaRegistro(listaPedidos,"listaPedidos.dat");
          modeloCarrito.setRowCount(0);
         total_txt.setText("0.0");
+       
         
     }//GEN-LAST:event_Pagar_btnActionPerformed
+    
+  
+    
+    
 
+    
+    
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Pagar_btn;

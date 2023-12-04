@@ -17,12 +17,13 @@ import modelo.Platillos;
  */
 public class ControladorStock {
     private ArrayList<Stock> listaStock;  // Lista que almacena objetos de la clase Stock.
-    private ArrayList<Pedido> listaPedidos;
+    private ArrayList<Platillos> listaPlatillos;
     /**
      * Constructor de la clase ControladorStock. Inicializa la lista de elementos de inventario (stock).
      */
     public ControladorStock() {
-        listaStock = new ArrayList<>();
+        this.listaPlatillos = PersistenciaGeneral.cargarListaPlatillos("listaPlatillos.dat");
+        this.listaStock = PersistenciaGeneral.cargarListaStock("listaStock.dat");
     }
 
     /**
@@ -71,6 +72,61 @@ public class ControladorStock {
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex.getMessage());
         }
+    }
+      
+        public void buscarIngredientePlatillo(String nombrePlatillo) {
+        for (Platillos platillo : listaPlatillos) {
+            if (platillo.getNombrePlatillo().equals(nombrePlatillo)) {
+                String nombreIngrediente = platillo.getNombreIngrediente();
+                // Realizar acciones con el nombre del ingrediente si es necesario
+                System.out.println("Ingrediente del platillo encontrado: " + nombreIngrediente);
+                restarStockPorIngrediente(nombreIngrediente);
+                return; // Terminamos el método una vez que encontramos el platillo
+            }
+        }
+
+        System.out.println("Ingrediente del platillo no encontrado.");
+    }
+        
+        
+   private void restarStockPorIngrediente(String nombreIngrediente) {
+    for (Stock stock : listaStock) {
+        if (stock.getNombreIngrediente().equals(nombreIngrediente)) {
+            int cantidadActual = Integer.parseInt(stock.getCantidadIngrediente());
+            if (cantidadActual > 0) {
+                int nuevaCantidad = cantidadActual - 1;
+                stock.setCantidadIngrediente(String.valueOf(nuevaCantidad));
+
+                // Mostrar mensaje en una ventana
+                JOptionPane.showMessageDialog(null, "Stock restado para " + stock.getNombreIngrediente());
+
+                // Guardar la lista actualizada en el archivo
+                PersistenciaGeneral.guardarListaStock(listaStock, "listaStock.dat");
+
+                // Mostrar alerta si la cantidad restante es menor a 5
+                if (nuevaCantidad < 5) {
+                    JOptionPane.showMessageDialog(null, "¡Atención! La cantidad de " + nombreIngrediente + " es baja.");
+                }
+
+                return; // Terminamos el método una vez que se actualiza el stock
+            } else {
+                // Mostrar alerta si no hay ingredientes disponibles
+                JOptionPane.showMessageDialog(null, "¡Atención! No hay stock disponible para " + nombreIngrediente + ".");
+                return;
+            }
+        }
+    }
+
+    // Mostrar mensaje en una ventana
+    JOptionPane.showMessageDialog(null, "Ingrediente no encontrado en la lista de stock.");
+}
+
+      
+      
+      
+    
+    public void guardarListaStockEnArchivo() {
+        PersistenciaGeneral.guardarListaStock(listaStock, "listaStock.dat");
     }
       
       
