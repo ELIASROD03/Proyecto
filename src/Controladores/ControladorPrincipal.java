@@ -14,6 +14,7 @@ public class ControladorPrincipal {
     private ControladorStock controladorStk;  // Controlador de stock
     private PersistenciaGeneral persistenciageneral;
     private ControladorPedido controladorPed;
+    
     /**
      * Constructor de la clase ControladorPrincipal. Inicializa los controladores de clientes, platillos y stock.
      */
