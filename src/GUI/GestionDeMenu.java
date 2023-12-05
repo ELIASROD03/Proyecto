@@ -262,7 +262,7 @@ public class GestionDeMenu extends javax.swing.JPanel {
       
         try {
         if (nombreplt_txt.getText().equals("") || precioPlt_txt.getText().equals("") || DescripPlt_txt.getText().equals("") || jComboBox1.getSelectedItem().equals("") || nomIngrediente_txt.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Please Enter all data");
+            JOptionPane.showMessageDialog(this, "Por favor Ingresa todos los datos");
         } else {
             // Crear un objeto Platillos con los datos ingresados
             //marca error por al constructor le falta que se agreguen variables
@@ -281,7 +281,7 @@ public class GestionDeMenu extends javax.swing.JPanel {
            
 
             // Mostrar un mensaje de éxito
-            JOptionPane.showMessageDialog(this, "Add data successfully");
+            JOptionPane.showMessageDialog(this, "Datos agregados correctamente");
 
             // Limpiar los campos de entrada
             nombreplt_txt.setText("");
@@ -317,9 +317,9 @@ public class GestionDeMenu extends javax.swing.JPanel {
             
         }else{
             if(jTablePlatillos.getRowCount()==0){
-                JOptionPane.showMessageDialog(this, "Table is Empty.");
+                JOptionPane.showMessageDialog(this, "Tabla esta vacía.");
             }else{
-                JOptionPane.showMessageDialog(this, "PLEASE SELESCT sINGLE rOW FOR DELETE.");
+                JOptionPane.showMessageDialog(this, "Por favor selecciona un dato.");
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed

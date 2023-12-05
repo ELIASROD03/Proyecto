@@ -286,7 +286,7 @@ public class RealizarPedido extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
           if (jSpinner1.getValue().equals("") || jTextField1.getText().equals("")) {
-        JOptionPane.showMessageDialog(this, "Por favor rellena todos los datos");
+        JOptionPane.showMessageDialog(this, "Por favor Ingresa todos los datos");
     } else {
         String spinnerValue = jSpinner1.getValue().toString(); // Convertir el valor del JSpinner a String
         String textFieldValue = jTextField1.getText();
@@ -311,9 +311,9 @@ public class RealizarPedido extends javax.swing.JPanel {
             tblModel.removeRow(tablaCarrito.getSelectedRow());
         }else{
             if(tablaCarrito.getRowCount()==0){
-                JOptionPane.showMessageDialog(this, "Table is Empty.");
+                JOptionPane.showMessageDialog(this, "Tabla esta vacía.");
             }else{
-                JOptionPane.showMessageDialog(this, "PLEASE SELESCT sINGLE rOW FOR DELETE.");
+                JOptionPane.showMessageDialog(this, "Por favor selecciona un dato.");
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed

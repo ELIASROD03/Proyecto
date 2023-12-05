@@ -52,12 +52,12 @@ public class ControladorPlatillos {
                 // Guarda la lista actualizada en el archivo
                 PersistenciaGeneral.guardarListaPlatillos(listaPlatillos, "listaPlatillos.dat");
 
-                JOptionPane.showMessageDialog(null, "Row edited successfully.");
+                JOptionPane.showMessageDialog(null, "Editado correctamente");
             } else {
                 if (jTablePlatillos.getRowCount() == 0) {
-                    JOptionPane.showMessageDialog(null, "Table is Empty.");
+                    JOptionPane.showMessageDialog(null, "Tabla esta vacía.");
                 } else {
-                    JOptionPane.showMessageDialog(null, "PLEASE SELECT SINGLE ROW FOR EDIT.");
+                    JOptionPane.showMessageDialog(null, "Por favor selecciona un dato.");
                 }
             }
         } catch (Exception ex) {

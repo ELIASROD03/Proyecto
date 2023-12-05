@@ -194,12 +194,12 @@ public class GestionClientes extends javax.swing.JPanel {
     private void agregarclt_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarclt_btnActionPerformed
         try {
             if(nombreC.getText().equals("")|| telefonoC.getText().equals("")|| preferenciaC.getText().equals("")){
-                JOptionPane.showMessageDialog(this, "Please Enter all data");
+                JOptionPane.showMessageDialog(this, "Por favor Ingresa todos los datos");
             }else{
                Cliente cliente = new Cliente(nombreC.getText(), telefonoC.getText(), preferenciaC.getText());
                listaClientes.add(cliente);
                 // Mostrar un mensaje de éxito
-               JOptionPane.showMessageDialog(this, "Add data successfully");
+               JOptionPane.showMessageDialog(this, "Datos agregados correctamente");
                
                // Limpiar los campos de entrada
                nombreC.setText("");
@@ -231,9 +231,9 @@ public class GestionClientes extends javax.swing.JPanel {
             
         }else{
             if(jTableClientes.getRowCount()==0){
-                JOptionPane.showMessageDialog(this, "Table is Empty.");
+                JOptionPane.showMessageDialog(this, "Datos vacíos o incompletos.");
             }else{
-                JOptionPane.showMessageDialog(this, "PLEASE SELESCT sINGLE rOW FOR DELETE.");
+                JOptionPane.showMessageDialog(this, "Por favor selecciona un dato.");
             }
         }
     }//GEN-LAST:event_borrarclt_btnActionPerformed

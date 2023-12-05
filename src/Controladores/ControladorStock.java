@@ -60,12 +60,12 @@ public class ControladorStock {
                 // Guarda la lista actualizada en el archivo
                 PersistenciaGeneral.guardarListaStock(listaStock, "listaStock.dat");
 
-                JOptionPane.showMessageDialog(null, "Row edited successfully.");
+                JOptionPane.showMessageDialog(null, "Editado correctamente.");
             } else {
                 if (tablaStock.getRowCount() == 0) {
-                    JOptionPane.showMessageDialog(null, "Table is Empty.");
+                    JOptionPane.showMessageDialog(null, "Tabla esta vacía.");
                 } else {
-                    JOptionPane.showMessageDialog(null, "PLEASE SELECT SINGLE ROW FOR EDIT.");
+                    JOptionPane.showMessageDialog(null, "Por favor selecciona un dato para editar.");
                 }
             }
         } catch (Exception ex) {
