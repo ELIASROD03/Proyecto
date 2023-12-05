@@ -75,7 +75,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ordenar-comida.png"))); // NOI18N
 
         jButton1.setText("Registro de Pedidos");
-        jButton1.setBorderPainted(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

@@ -2,9 +2,7 @@
 package GUI;
 
 import Controladores.ControladorPrincipal;
-import java.util.ArrayList;
 
-import modelo.Platillos;
 
 public class ControladorVentanas {
     private ControladorPrincipal controladorPrincipal;
